@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Alura.ListaLeitura.App.Negocio;
+﻿using Alura.ListaLeitura.App.Negocio;
 using Alura.ListaLeitura.App.Repositorio;
 using System;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Alura.ListaLeitura.App
 {
