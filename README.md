@@ -4,7 +4,7 @@ O objetivo desse projeto para o curso é criar uma WebApp Asp.NET CORE de uma li
 
 O projeto entregue foi uma aplicação console que no main lia um arquivo CSV com as listas citadas e imprimia no terminal.
 
-## Commit: f44189d885be9ed4ea10b601d3086b6cf0b349d7 - Criando um Servidor HTTP
+## Criando um Servidor HTTP
 
 Para criar uma página da web que apresente as listas de leitura é necessário primeiro criar um servidor HTTP, por isso
 precisamos transformar o projeto de uma aplicação console para uma aplicação servidor que receba chamadas HTTP que retorne
@@ -22,7 +22,7 @@ que são definidas em uma outra classe que pode ter qualquer nome, mas por conve
 Ao chamar o método Run() do objeto inicializado na variável "host" e executar o código é possível verificar que o servidor já está
 rodando, mas por enquanto suas chamadas não retornam nenhum conteúdo.
 
-## Commit: 3f7676a983cfce11b2b4ea51a4034181cac3c0c0 - Retornando uma Lista de Livros para Ler na Requisição
+## Retornando uma Lista de Livros para Ler na Requisição
 
 Nesse commit o objetivo era fazer com que o servidor retornasse a lista de livros para ler sempre que recebesse uma requisição.
 Para isso foi criado o método "LivrosParaLer", no corpo do método é instanciada o objeto de uma classe que possui as listas de livros
@@ -40,3 +40,22 @@ seja acionado.
 O método "Run()" recebe como parâmetro um "RequestDelegate", o qual deve retornar um objeto do tipo "Task", por isso o método "LivrosParaLer"
 deve ter o retorno do tipo "Task". O método "WriteAsync" mencionado anteriormente já retorna um objeto do tipo "Task" então basta informar o retorno.
 Após isso basta executar a aplicação novamente e acessar o endereço do servidor que a lista de livros para ler será retornada.
+
+## Criando um Roteamento Simples Para os Repositórios de Livros
+
+Foi criado um novo método Task na classe Startup a qual será responsável por identificar qual o
+recurso deve ser retornado ao navegador dependendo do path inserido no navegador.
+
+Para isso foi criado uma variável do tipo Dictionary com as chaves do tipo string, referente ao
+path inserido no navegador, e os values do tipo RequestDelegate, referente aos métodos Task.
+
+Para identificar o path inserido no navegador é utilizada a propriedade Request do parâmetro
+HttpContext do método Roteamento. Ao verificar se o path contido no navegador é igual a uma
+chave do dicionário é chamado o RequestDelegate contido através do método "Invoke()" passando
+o context do Roteamento como argumento.
+
+Caso o path não esteja contido no dicionário é retornando uma mensagem de rota não encotrada
+e o StatusCode 404.
+
+Para que o servidor seja inicializado com as opções de roteamento o método "Roteamento" é passado
+como argumento no app.Run() do método Configure.
