@@ -158,3 +158,18 @@ pelass informações do livro e a string é colocada novamente para o próximo i
 
 Ao final do foreach a última string "#NOVO-ITEM#" é removido do conteúdo do arquivo HTML e ele pode
 ser retornado. O resultado é a geração de um HTML dinâmica para a lista de livros para ler.
+
+## Isolando as responsabilidades em classes distintas
+
+Dado o acúmulo de responsabilidades na classe "Startup" que deveria ter o objetivo apenas de 
+prover as configurações de inicialização do servidor se fez necessário isolar os seus métodos
+em classes distintas que recebessem essas responsabilidades tornando a classe "Startup" menos
+dependente.
+
+Por isso foram criadas as classes "LivrosLogica", para se responsabilzar pelos métodos de exibição
+dos livros, "CadastroLogica", para os métodos de cadastro de livros nas listas, e também a classe
+"HtmlUtils" que contêm o método para carregar a string html que é utilizada pelas duas classes de
+lógica.
+
+Foram necessários fazer alguns ajustes no mapeamento das rotas utilizando os métodos das classes
+de lógica como estáticos.
