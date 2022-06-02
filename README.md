@@ -59,3 +59,19 @@ e o StatusCode 404.
 
 Para que o servidor seja inicializado com as opções de roteamento o método "Roteamento" é passado
 como argumento no app.Run() do método Configure.
+
+## Substituindo o método de roteamento pelo serviço de roteamento do Asp.NET Core
+
+Para utilizar o serviço de roteamento do Asp.NET Core foi necessário no método adicionar o serviço
+de roteamento na classe "Startup" através do método "ConfigureServices" fazendo a injeção de dependência
+do variável "services" do tipo "IServicesCollection", no corpo do método é chamado o método
+"AddRouting" do "services" para adicionar o serviço de roteamento.
+
+Já no método "Configure" foi necessário criar uma variável "builder" do tipo "RouteBuilder"
+na qual é passado o "app" como argumento. Com a variável "builder" é possível configurar de forma
+parecida com a que foi feito com a variável do tipo "Dictionary" chamando o método "MapRoute"
+do "builder".
+
+Depois de configuradas as rotas é chamado o método "Build()" para construir um objeto do tipo
+"IRouter" que será usado como argumento em "app.UserRouter()" para passar as rotas. Ao testar
+as requisições é percebido que o servidor continua atendendo as requisições.
