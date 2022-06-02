@@ -173,3 +173,41 @@ lógica.
 
 Foram necessários fazer alguns ajustes no mapeamento das rotas utilizando os métodos das classes
 de lógica como estáticos.
+
+## Utilizando o framework Asp.NET Core Mvc para Roteamento
+
+Como pode ser visto nos últimos commits foi retirado parte das responsabilidades da classe "Startup"
+para que ela deixasse de ser uma classe "faz tudo" e passasse a ser mais focada no seu papel que
+é o dar as configurações de inicialização do servidor. Contudo ao olhar a classe é possível ver
+que ela ainda possui o papel fazer o tratamento do roteamento, pois é no método "Configure" que
+temos que definir cada nova funcionalidade que for criada na aplicação.
+
+O ideal é que possuímos outra classe que pudesse fazer o roteamento para que não seja preciso alterar
+a classe "Startup" sempre que adicionar uma nova funcionalidade.
+
+O .NET já possui um pacote que faz esse tratamento das rotas encaminhando para as devidas funcionalidades
+dependendo do endereço acessado. Esse é o Asp.NET Core Mvc.
+
+Para utilizar o Asp.NET Core Mvc é necessário fazer a instalação do pacote e adicionar os serviços
+do framework no método "ConfigureServices" da classe "Startup". Depois no método "Configure" nós
+dizemos que queremos utilizar o roteamento padrão do Asp.NET Core Mvc.
+
+Depois é preciso adequar as classes que chamamos "Logica" para o padrão do Asp.NET Core Mvc. Nele
+as classes que fazem o tratamento das requisições são nomeadas pelo sufixo "Controller", ou seja,
+são controllers. E nos controllers nós temos as "Actions" que são os métodos dessas classes.
+
+Da mesma forma é possível adequar os métodos para o padrão das actions do framework. Os métodos não
+precisam mais ser RequestDelegates pois o framework já fará esse tratamento, dessa forma os métodos
+podem ter os retornos não do tipo "Task" mas dos tipos que eles querem retornar, como "string" por
+exemplo. 
+
+Logo também não é mais preciso do parâmetro "HttpContext" nas actions. Para enviar o retorno das
+requisoções podesse simplesmente retornar o tipo definido no método sem a necessidade do "HttpContext".
+E para pegar os dados da requisição o framework adicionou um estágio no request pipeline após o roteamento
+e antes da execução do método que é chamado de "Model Binding" em que o Asp.NET Core Mvc busca atender
+a um modelo definido no método chamado pelo navegador. Esse modelo é definido nos parâmetros do método
+e o framework busca uma forma de atender esse modelo antes da execução do método.
+
+Ao observar os métodos é possível ver que eles não possuem mais nenhuma dependência com a tecnologia
+de desenvolvimento web e parecessem simplesmente métodos comuns de um classe. E isso traz uma das
+vantagens de utilizar o Asp.NET Core Mvc que é poder testar os métodos sem precisar subir um servidor.
