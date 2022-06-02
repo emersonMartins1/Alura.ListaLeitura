@@ -75,3 +75,19 @@ do "builder".
 Depois de configuradas as rotas é chamado o método "Build()" para construir um objeto do tipo
 "IRouter" que será usado como argumento em "app.UserRouter()" para passar as rotas. Ao testar
 as requisições é percebido que o servidor continua atendendo as requisições.
+
+## Adicionando um novo livro utilizando rotas com template
+
+Para adicionar um novo livro a lista de livros para ler será necessário criar uma rota com 
+template. Em uma rota com template é possível passar através do endereço argumentos que podem
+ser acessados pelo "HttpContext" através da propriedade "GetRouteValue()".
+
+Logo é necessário criar uma nova rota a qual atribuíra o método responsável por responder a
+requisição e capturar os argumentos passados para adicionar o novo livro. Um livro precisa de nome
+e autor e isso eles serão definidos como os parâmetros dessa rota entre colchetes "{}" e com o
+respectivo identificador.
+
+Será necessário criar um método que atenda a esse novo roteamento. E por isso foi criado o método
+"NovoLivroParaLer". Para acessar os parâmetros de nome e autor da rota é necessário utilizar o método
+"GetRouteValue()" do HttpContext com o mesmo identificador utilizado nas rotas e sem os colchetes.
+O retorno desse método é um objeto e por isso será necessário converte-ló para string.
