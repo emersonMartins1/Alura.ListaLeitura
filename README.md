@@ -135,3 +135,13 @@ ser lido do início ao fim e retornado como uma string.
 Obs.: Talvez o arquivo ".html" não seja salvo automaticamente na pasta de saída do projeto e o
 caminho para o arquivo não seja encontrado. Para resolver isso vá no arquivo .html e clica com o
 botão direito, vá em propriedades e na opção "Copy to Output Directory" selecione "Copy if newer".
+
+## Mandando as informações do formulário via método POST e pegando as informações
+
+Para retirar as informações enviadas pelo navegador do endereço da requisição é necessário adicionar
+o atributo "method" na tag "form" do arquivo .html informando que se deseja utilizar o método "post"
+para enviar o formulário.
+
+Após fazer essa alteração não é mais possível acessar as informações do formulário pela propriedade
+"Query" do "Response", já que elas não estão mais na query string. Para pegar essas informações é
+utilizada a propriedade "Form" também do "Response" e o restante do código continua o mesmo.
