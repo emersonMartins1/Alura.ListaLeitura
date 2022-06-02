@@ -143,5 +143,18 @@ o atributo "method" na tag "form" do arquivo .html informando que se deseja util
 para enviar o formulário.
 
 Após fazer essa alteração não é mais possível acessar as informações do formulário pela propriedade
-"Query" do "Response", já que elas não estão mais na query string. Para pegar essas informações é
-utilizada a propriedade "Form" também do "Response" e o restante do código continua o mesmo.
+"Query" do "Request", já que elas não estão mais na query string. Para pegar essas informações é
+utilizada a propriedade "Form" também do "Request" e o restante do código continua o mesmo.
+
+## Gerando HTML dinamicante para lista de livros para ler
+
+Para exibir uma página HTML com uma lista de livros foi criado um novo arquivo .html e adicionado
+a tag de lista "ul", porém ao invés de adicionar os itens de lista (li) foi deixada uma string
+com o nome "#NOVO-ITEM#".
+
+No método "LivrosParaLer" é carregadado o conteúdo HTML porém antes dele ser retornado o repositório
+de livros para ler é percorrido e para cada livro no repositório é substituída a string "#NOVO-ITEM#"
+pelass informações do livro e a string é colocada novamente para o próximo item.
+
+Ao final do foreach a última string "#NOVO-ITEM#" é removido do conteúdo do arquivo HTML e ele pode
+ser retornado. O resultado é a geração de um HTML dinâmica para a lista de livros para ler.
