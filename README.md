@@ -121,3 +121,17 @@ Para conseguir acessar os valores passados nos inputs do formulário HTML será 
 "Request" do "HttpContext" e na propriedade Request será acessada outra propriedade chamada "Query",
 a qual é referente a query string enviada pelo navegador com os inputs. Na propriedade Query é dito
 qual é a chave do dado que queremos ter acessso e utilizado o método "First()".
+
+## Separando o HTML do C Sharp
+
+Para tornar mais fácil a manutenção do HTML e do próprio C Sharp é necessário separar o HTML em
+outro arquivo com a extensão ".html". Para que as páginas HTML possam ser carregadas dinamicamente
+será criado um novo método chamado "CarregaArquivoHTML" que receberá o nome do arquivo HTML a ser
+retornado e retornará uma string.
+
+Para retornar a string será utilizada a classe "File" para a partir do caminho do arquivo ele poder
+ser lido do início ao fim e retornado como uma string.
+
+Obs.: Talvez o arquivo ".html" não seja salvo automaticamente na pasta de saída do projeto e o
+caminho para o arquivo não seja encontrado. Para resolver isso vá no arquivo .html e clica com o
+botão direito, vá em propriedades e na opção "Copy to Output Directory" selecione "Copy if newer".

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -53,19 +54,21 @@ namespace Alura.ListaLeitura.App
 
         public Task ExibeFormulario(HttpContext context)
         {
-            var html = @"
-                <html>
-                    <form action='/Cadastro/Incluir'>
-                        <input name='titulo'/>
-                        <input name='autor'/>
-                        <button>Gravar</button>
-                    </form>
-                </html>";
+            var html = CarregaArquivoHTML("formulario");
 
             return context.Response.WriteAsync(html);
         }
 
-        private Task ExibeDetalhes(HttpContext context)
+        public string CarregaArquivoHTML(string nomeArquivo)
+        {
+            var nomeCompletoArquivo = $"HTML/{nomeArquivo}.html";
+            using (var arquivo = File.OpenText(nomeCompletoArquivo))
+            {
+                return arquivo.ReadToEnd();
+            }
+        }
+
+        public Task ExibeDetalhes(HttpContext context)
         {
             int id = Convert.ToInt32(context.GetRouteValue("id"));
             var repo = new LivroRepositorioCSV();
