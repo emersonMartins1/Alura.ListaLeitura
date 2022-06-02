@@ -103,3 +103,21 @@ Para criar uma restrição nas requisições dessa rota é possível especificar
 de dado que se espera receber do navegador. Caso seja informado no navegador um tipo de dado diferente
 do especificado o método para resposta não é chamado e é retornado no navegador um código de erro
 404, informando que não há uma reposta para aquela requisição.
+
+## Criando um formulário e cadastrando um novo livro a partir dele
+
+Para exiber um formulário foi necessário criar uma nova rota que direciona-se a um novo 
+RequestDelegate que retornasse uma string no formato HTML. Esse HTML possui a tag de formulário
+com duas tags de input referentes ao título e autor do livro, e por isso nomeadas dessa forma,
+e uma tag button para enviar uma nova requisição com o formulário.
+
+Além disso um dos atributos da tag form é um action que redireciona para outro RequestDelegate 
+que fará a inclusão do livro após o formulário ser enviado. Esse RequestDelegate também deve
+ser mapeado no "RouteBuilder". No action deve ser utilizada a barra inversa (/) antes do endereço
+mapeado do RequestDelegate para que o .NET Core entenda que essa nova requisição está no mesmo
+nível de "Cadastro/NovoLivro".
+
+Para conseguir acessar os valores passados nos inputs do formulário HTML será utilizada a propriedade
+"Request" do "HttpContext" e na propriedade Request será acessada outra propriedade chamada "Query",
+a qual é referente a query string enviada pelo navegador com os inputs. Na propriedade Query é dito
+qual é a chave do dado que queremos ter acessso e utilizado o método "First()".
