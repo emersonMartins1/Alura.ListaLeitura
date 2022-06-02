@@ -91,3 +91,15 @@ Será necessário criar um método que atenda a esse novo roteamento. E por isso
 "NovoLivroParaLer". Para acessar os parâmetros de nome e autor da rota é necessário utilizar o método
 "GetRouteValue()" do HttpContext com o mesmo identificador utilizado nas rotas e sem os colchetes.
 O retorno desse método é um objeto e por isso será necessário converte-ló para string.
+
+## Exibindo os detalhes de um livro e utilizando restrições nas rotas
+
+Foi criado uma nova rota com template que recebe um id e cujo o "RequestDelegate" deve retornar
+os detalhes do livro referente a aquele id. Caso não seja colocada uma restrição e seja digitado
+no navegador um  valor para o id que não seja um número é exibido no navegador um código de erro
+500, referente ao erro no servidor ao tentar converter algo que não é um número para um número.
+
+Para criar uma restrição nas requisições dessa rota é possível especificar no segmento do id o tipo
+de dado que se espera receber do navegador. Caso seja informado no navegador um tipo de dado diferente
+do especificado o método para resposta não é chamado e é retornado no navegador um código de erro
+404, informando que não há uma reposta para aquela requisição.
