@@ -211,3 +211,34 @@ e o framework busca uma forma de atender esse modelo antes da execução do mét
 Ao observar os métodos é possível ver que eles não possuem mais nenhuma dependência com a tecnologia
 de desenvolvimento web e parecessem simplesmente métodos comuns de um classe. E isso traz uma das
 vantagens de utilizar o Asp.NET Core Mvc que é poder testar os métodos sem precisar subir um servidor.
+
+## Retornado o HTML com Asp.NET Core Mvc
+
+Foi necessário fazer algumas alterações nos métodos que retornam HTML pois agora é o framework que
+trata dos retorno dos métodos e não mais o código próprio, o método anterior agora retorna texto 
+puro. Isso acontece pois o framework adiciona um estágio após o processamento da action que é 
+chamado de "ExecuteResult" o qual trata o retorno dos dados dependendo do tipo informado no 
+retorno.
+
+O framework encapsula o resultado das actions em uma interface chamada "IActionResult". Cada tipo
+de dado possui uma implementação diferente do "IActionResult" que é o tipo de dado retornado pela
+requisição. A implementação que retorna conteúdo HTML é chamada de "ViewResult". Ao instanciar um
+objeto do tipo "ViewResult" é possível utilizar a propriedade "ViewName" e dizer qual a view que
+deve ser carregada para retorno pela action.
+
+Porém apenas fazer essas alterações ainda não vai retornar o resultado esperado e o retorno será
+o status code 500. Para verificar qual a causa desse código de erro no servidor é possível habilitar
+uma configuração, a qual só é recomendado ser usado em ambientes de testes e desenvolvimento, chamada
+"UseDeveloperExceptionPage()", que é um método que é acessado através do objeto app do "Configure"
+da classe "Startup".
+
+Ao tentar rodar o código novamente é recebido uma informação de erro mais detalhada a qual diz
+que o arquivo não foi encontrado e lista as pastas em que ele foi procurado, entre elas está o
+caminho "Views/PrefixoControlador" e é possível ver também que o arquivo o qual o framework procura
+tem a extensão "cshtml" e não "html".
+
+Após fazer esses ajustes o erro será resolvido, mas é provável que seja exibido outro erro na página
+referente a um bug reportado no GitHub. Para resolver esse bug é necessário ir no arquivo "csproj"
+na tag "PropertyGroup" e adicionar a tag "PreserveCompilationContext" com o valor true. Depois é
+necessário limpar a solução e fazer o rebuild. Ao subir o servidor novamente e requisitar a action
+que devolve o conteúdo html será visto o conteúdo esperado.

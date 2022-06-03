@@ -2,6 +2,7 @@
 using Alura.ListaLeitura.App.Negocio;
 using Alura.ListaLeitura.App.Repositorio;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,28 +24,31 @@ namespace Alura.ListaLeitura.App.Logica
             return conteudoArquivo = conteudoArquivo.Replace("#NOVO-ITEM#", "");
         }
 
-        public static Task LivrosParaLer(HttpContext context)
+        public IActionResult ParaLer()
         {
             var _repo = new LivroRepositorioCSV();
-            var html = CarregaLista(_repo.ParaLer.Livros);
+            //var html = CarregaLista(_repo.ParaLer.Livros);
+            var html = new ViewResult { ViewName = "lista" };
 
-            return context.Response.WriteAsync(html);
+            return html;
         }
 
-        public static Task LivrosLendo(HttpContext context)
+        public IActionResult Lendo()
         {
             var _repo = new LivroRepositorioCSV();
-            var html = CarregaLista(_repo.Lendo.Livros);
+            //var html = CarregaLista(_repo.Lendo.Livros);
+            var html = new ViewResult { ViewName = "lista" };
 
-            return context.Response.WriteAsync(html);
+            return html;
         }
 
-        public static Task LivrosLidos(HttpContext context)
+        public IActionResult Lidos()
         {
             var _repo = new LivroRepositorioCSV();
-            var html = CarregaLista(_repo.Lidos.Livros);
+            //var html = CarregaLista(_repo.Lidos.Livros);
+            var html = new ViewResult { ViewName = "lista" };
 
-            return context.Response.WriteAsync(html);
+            return html;
         }
 
         public string Detalhes(int id)
