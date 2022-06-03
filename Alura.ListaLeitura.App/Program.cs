@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace Alura.ListaLeitura.App
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -16,15 +16,6 @@ namespace Alura.ListaLeitura.App
                 .UseStartup<Startup>()
                 .Build();
             host.Run();
-
-            //ImprimeLista(_repo.ParaLer);
-            //ImprimeLista(_repo.Lendo);
-            //ImprimeLista(_repo.Lidos);
-        }
-
-        static void ImprimeLista(ListaDeLeitura lista)
-        {
-            Console.WriteLine(lista);
         }
     }
 }
