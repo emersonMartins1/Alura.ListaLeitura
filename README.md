@@ -238,7 +238,33 @@ caminho "Views/PrefixoControlador" e é possível ver também que o arquivo o qu
 tem a extensão "cshtml" e não "html".
 
 Após fazer esses ajustes o erro será resolvido, mas é provável que seja exibido outro erro na página
-referente a um bug reportado no GitHub. Para resolver esse bug é necessário ir no arquivo "csproj"
-na tag "PropertyGroup" e adicionar a tag "PreserveCompilationContext" com o valor true. Depois é
-necessário limpar a solução e fazer o rebuild. Ao subir o servidor novamente e requisitar a action
-que devolve o conteúdo html será visto o conteúdo esperado.
+referente a falta de uma configuração no arquivo "csproj". Para resolver esse erro é necessário 
+ir no arquivo "csproj" na tag "PropertyGroup" e adicionar a tag "PreserveCompilationContext" com 
+o valor true, a tag mencionada é exigida para compilar as views, quando está habilitada é indicado
+ao .NET que as views serão compiladas em tempo de execução. Também é possível trabalhar com ela 
+desabilitada usando ela em conjunto com outras opções para pré-compilar as views. 
+
+Depois é necessário limpar a solução e fazer o rebuild. Ao subir o servidor novamente e requisitar
+a action que devolve o conteúdo html será visto o conteúdo esperado.
+
+## O motor de views Razor
+
+Ao tentar executar a action "ParaLer" do controller "Livros" era possível ver que o HTML para a lista
+não estava mais sendo gerado dinamicanete após as alterações que precisarem ser feitas no método
+para se adequar as convenções do Asp.NET Core Mvc, já que agora não temos mais o controle do arquivo
+carregado.
+
+Para gerar HTML dinâmico para uma lista como estava sendo feito o framework possui um motor de views
+chamado Razor em que é possível utilizar código C Sharp para executar dentro do arquivo da view, por
+isso o arquivo não possui mais a extensão "html" e sim "cshtml", porque o Razor faz a compilação do
+"cshtml" para gerar o HTML da página, tendo assim um HTML dinâmico.
+
+Para utilizar o código C Sharp dentro da view devesse indicar ao Razor utilizando o caractere "@",
+porém ainda há a necessidade de passarmos o conteúdo que será trabalhado pelo Razor da action para
+a view. Por isso o framework possui uma classe chamada "Controller" da qual podesse fazer a herança
+para o nosso controller.
+
+Essa classe "Controller" possui a propriedade "ViewBag" a qual pode ser utilizada para carregar
+variáveis da action para a  view. Para que a "ViewBag" seja inicializada é necessário utilizar o
+método "View" da classe pai "Controller". E com isso podemos acessar o conteúdo da "ViewBag" 
+no "cshtml".

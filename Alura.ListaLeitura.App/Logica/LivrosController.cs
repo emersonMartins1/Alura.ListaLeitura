@@ -9,17 +9,11 @@ using System.Threading.Tasks;
 
 namespace Alura.ListaLeitura.App.Logica
 {
-    public class LivrosController
+    public class LivrosController : Controller
     {
         public static string CarregaLista(IEnumerable<Livro> livros)
         {
             var conteudoArquivo = HtmlUtils.CarregaArquivoHTML("lista");
-
-            foreach (var livro in livros)
-            {
-                conteudoArquivo = conteudoArquivo
-                    .Replace("#NOVO-ITEM#", $"<li>{livro.Titulo} - {livro.Autor}</li>#NOVO-ITEM#");
-            }
 
             return conteudoArquivo = conteudoArquivo.Replace("#NOVO-ITEM#", "");
         }
@@ -27,28 +21,22 @@ namespace Alura.ListaLeitura.App.Logica
         public IActionResult ParaLer()
         {
             var _repo = new LivroRepositorioCSV();
-            //var html = CarregaLista(_repo.ParaLer.Livros);
-            var html = new ViewResult { ViewName = "lista" };
-
-            return html;
+            ViewBag.Livros = _repo.ParaLer.Livros;
+            return View("lista");
         }
 
         public IActionResult Lendo()
         {
             var _repo = new LivroRepositorioCSV();
-            //var html = CarregaLista(_repo.Lendo.Livros);
-            var html = new ViewResult { ViewName = "lista" };
-
-            return html;
+            ViewBag.Livros = _repo.Lendo.Livros;
+            return View("lista");
         }
 
         public IActionResult Lidos()
         {
             var _repo = new LivroRepositorioCSV();
-            //var html = CarregaLista(_repo.Lidos.Livros);
-            var html = new ViewResult { ViewName = "lista" };
-
-            return html;
+            ViewBag.Livros = _repo.Lidos.Livros;
+            return View("lista");
         }
 
         public string Detalhes(int id)
